@@ -244,9 +244,7 @@ parts:
                        -Dintrospection=false,
                        -Dsystemd=false,
                        -Dman=false,
-                       -Dconsolekit=false,
-                       -Dpkcs7=false,
-                       -Dgpg=false]
+                       -Dpkcs7=false]
     source: .
     source-type: git
     override-build: |
@@ -255,7 +253,7 @@ parts:
     build-packages:
       - bash-completion
       - gcab
-      - gettext
+      - gnutls-dev
       - libarchive-dev
       - libelf-dev
       - libgcab-dev
