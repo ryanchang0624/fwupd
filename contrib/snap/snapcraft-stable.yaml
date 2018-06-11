@@ -17,10 +17,31 @@ apps:
     command: fwupdtool.wrapper
     completer:
       usr/share/bash-completion/completions/fwupdtool
+  fwupd:
+    command: fwupd.wrapper
+    daemon: simple
+    slots: [fwupd]
+  fwupdmgr:
+    command: fwupdmgr.wrapper
+    completer:
+      usr/share/bash-completion/completions/fwupdmgr
+    plugs: [network,fwupdmgr] #network plug for sendmms
 
 plugs:
   fwupdtool:
     interface: home
+  fwupdmgr:
+    interface: fwupd
+    interface: home
+
+slots:
+  fwupd:
+    interface: fwupd
+  fwupd-data:
+    content: fwupd-data
+    interface: content
+    write:
+      - $SNAP_DATA
 
 parts:
   libefivar-dev:
@@ -252,8 +273,8 @@ parts:
       - libelf1
       - libgpgme11
       - libjson-glib-1.0-0
+      - libpolkit-gobject-1-0
     prime:
-      - -usr/bin
       - -usr/sbin
       - -usr/lib/gnupg
       - -usr/share/man
@@ -274,7 +295,6 @@ parts:
       - -etc/dbus-1
       - -lib/systemd
       - -lib/udev
-      - -usr/lib/fwupd/fwupd
       - -usr/share/dbus-1
       - -usr/share/gnupg
       - -usr/share/lintian
@@ -310,8 +330,11 @@ parts:
       - -usr/share/pkgconfig
       - -usr/share/GConf
     after: [fwupd]
-  fwupdtool-wrapper:
+  fwupd-wrappers:
     plugin: dump
     source: contrib/snap
     stage:
+    - fwupd-command
     - fwupdtool.wrapper
+    - fwupd.wrapper
+    - fwupdmgr.wrapper
