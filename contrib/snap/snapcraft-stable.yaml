@@ -21,6 +21,7 @@ apps:
     command: fwupd.wrapper
     daemon: simple
     slots: [fwupd, daemon]
+    plugs: [dcdbas-control]
   fwupdmgr:
     command: fwupdmgr.wrapper
     completer:
@@ -44,11 +45,6 @@ slots:
     name: org.freedesktop.fwupd
   fwupd:
     interface: fwupd
-  fwupd-data:
-    content: fwupd-data
-    interface: content
-    write:
-      - $SNAP_DATA
 
 parts:
   libefivar-dev:
