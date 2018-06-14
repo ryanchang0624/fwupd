@@ -13,6 +13,8 @@ architectures:
   - amd64
 
 apps:
+  dfu-tool:
+    command: dfu-tool.wrapper
   fwupdtool:
     command: fwupdtool.wrapper
     completer:
@@ -34,6 +36,8 @@ plugs:
     bus: system
     name: org.freedesktop.fwupd
   fwupdtool:
+    interface: home
+  dfu-tool:
     interface: home
   fwupdmgr:
     interface: home
@@ -339,6 +343,7 @@ parts:
     plugin: dump
     source: contrib/snap
     stage:
+    - dfu-tool.wrapper
     - fwupd-command
     - fwupdtool.wrapper
     - fwupd.wrapper
