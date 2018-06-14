@@ -275,10 +275,16 @@ parts:
       - libgpgme11
       - libjson-glib-1.0-0
       - libpolkit-gobject-1-0
-      - gnupg
     prime:
+      # we explicitly don't want /usr/bin/gpgconf
+      # this will cause gpgme to error finding it
+      # but that also avoids trying to use non-existent
+      # /usr/bin/gpg2
+      - -usr/bin/gpg*
+      - -usr/bin/watchgnupg
+      - -usr/bin/kbxutil
+      - -usr/bin/pinentry*
       - -usr/sbin
-      - -usr/lib/gnupg
       - -usr/share/man
       - -usr/share/GConf
       - -etc/X11
@@ -296,7 +302,6 @@ parts:
       - -usr/include
       - -lib/systemd
       - -lib/udev
-      - -usr/share/gnupg
       - -usr/share/lintian
       - -usr/share/pkgconfig
       - -usr/share/installed-tests
